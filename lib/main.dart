@@ -1,5 +1,8 @@
 import 'package:cvapp/experience.dart';
 import 'package:cvapp/personne.dart';
+import 'package:cvapp/widgets/description.dart';
+import 'package:cvapp/widgets/experience_widget.dart';
+import 'package:cvapp/widgets/header.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -37,9 +40,9 @@ class _CVScreenState extends State<CVScreen> {
       profileDescription:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       skills: [
-        "Communication",
-        "Team Building",
-        "ETCCC"
+        "- Communication",
+        "- Team Building",
+        "- ETCCC"
       ],
       experiences: [
         Experience(
@@ -65,159 +68,39 @@ class _CVScreenState extends State<CVScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        /*  appBar: AppBar(
-          centerTitle: true,
-          title: const Text("CVTech"),
-        ),*/
         body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 50, 0, 00),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Column(
-                  //  mainAxisAlignment: MainAxisAlignment.,
-                  children: <Widget>[
-                    Text(
-                      personne.name.toUpperCase(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue.shade900,
-                        fontSize: 30,
-                      ),
-                    ),
-                    Text(
-                      personne.phone,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade700,
-                          fontSize: 15),
-                    ),
-                    Text(
-                      personne.email,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade700,
-                          fontSize: 15),
-                    ),
-                  ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          SizedBox(height: 50),
+          Header(
+              name: personne.name,
+              phone: personne.phone,
+              email: personne.email),
+          Description(
+              title: 'Profile', description: [personne.profileDescription]),
+          Description(
+              title: 'Compétence Principale', description: personne.skills),
+          Padding(
+            padding: const EdgeInsets.only(left: 0),
+            child: Column(
+              children: [
+                const Text(
+                  "Experience Professionnelle",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                    fontSize: 25,
+                  ),
                 ),
-                const CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: AssetImage("assets/images/picture.jpg"),
-                ),
-                // Image.asset(
-                //   'assets/images/picture.jpg',
-                //   width: 100.0,
-                //   height: 100.0,
-                // ), //image
+                ...personne.experiences.map((experience) => ExperienceWidget(
+                    description: experience.description,
+                    date: experience.date,
+                    title: experience.title)),
               ],
             ),
-            //   Text("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  const Text(
-                    "Profil",
-                    // textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                      fontSize: 25,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                      child: Text(
-                        personne.profileDescription,
-                        //textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade900,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Compétence Principale",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                        fontSize: 25,
-                      ),
-                    ),
-                  ),
-                  ...personne.skills.map((skill) => Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text("*" + skill),
-                      ))
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: [
-                  const Text(
-                    "Experience Professionnelle",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                      fontSize: 25,
-                    ),
-                  ),
-                  ...personne.experiences.map((experience) => Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Text(
-                                experience.title,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue.shade800,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              experience.date,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.shade900,
-                                fontSize: 15,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(experience.description),
-                            ),
-                          ],
-                        ),
-                      ))
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     ));
   }
