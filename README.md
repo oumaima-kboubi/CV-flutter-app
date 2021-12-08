@@ -1,6 +1,6 @@
 # cvapp
 
-A new Flutter project.
+This is a simple cv example using flutter to highlight the use of widgets. 
 
 ## Getting Started
 
